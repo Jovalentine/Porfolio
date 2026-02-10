@@ -76,7 +76,7 @@ const scrollToAbout = () => {
           <!-- CTA Buttons -->
           <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <a 
-              href="./Resume_(1).pdf" 
+              href="./Resume (2).pdf" 
               download="Francis_Johan_M_Resume.pdf"
               class="btn-primary inline-flex items-center gap-2"
             >
