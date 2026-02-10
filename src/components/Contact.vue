@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
-import { Mail, Phone, MapPin, Send, Github, Linkedin, MessageCircle } from 'lucide-vue-next'
+import { Mail, Phone, MapPin, Send, Github, Linkedin, MessageCircle, CheckCircle, X } from 'lucide-vue-next'
+import emailjs from '@emailjs/browser'
 
 const sectionRef = ref<HTMLElement>()
 const isVisible = ref(false)
 const isSubmitting = ref(false)
+const showSuccess = ref(false) // Controls the popup visibility
+const formRef = ref<HTMLFormElement>() // Reference to the HTML form
 
 useIntersectionObserver(sectionRef, ([{ isIntersecting }]) => {
   if (isIntersecting) {
@@ -21,34 +24,39 @@ const form = reactive({
 })
 
 const handleSubmit = async () => {
+  if (!formRef.value) return
+
   isSubmitting.value = true
   
   try {
-    // Create mailto link with form data
-    const subject = encodeURIComponent(form.subject || 'Contact from Portfolio')
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`
-    )
-    const mailtoLink = `mailto:joeseno040@gmail.com?subject=${subject}&body=${body}`
+    // -----------------------------------------------------------
+    // TODO: Replace these with your actual EmailJS credentials
+    // Sign up at https://www.emailjs.com/ to get them (It's free)
+    // -----------------------------------------------------------
+    const serviceID = 'service_ik6hrk9'
+    const templateID = 'template_e1ttsaw'
+    const publicKey = '7UN9_rLav1DBelG2Y'
+
+    // Sends the form data directly to your email
+    await emailjs.sendForm(serviceID, templateID, formRef.value, publicKey)
     
-    // Open email client
-    window.location.href = mailtoLink
+    // Show the success popup with animation
+    showSuccess.value = true
     
-    // Reset form after a short delay
-    setTimeout(() => {
-      Object.keys(form).forEach(key => {
-        form[key as keyof typeof form] = ''
-      })
-    }, 1000)
+    // Reset form fields
+    Object.keys(form).forEach(key => {
+      form[key as keyof typeof form] = ''
+    })
     
-    alert('Email client opened! Please send the email from your email application.')
   } catch (error) {
-    alert('There was an error opening your email client. Please send an email directly to joeseno040@gmail.com')
+    console.error('EmailJS Error:', error)
+    alert('Failed to send message. Please check your internet or try again later.')
+  } finally {
+    isSubmitting.value = false
   }
-  
-  isSubmitting.value = false
 }
 
+// Contact Info Data
 const contactInfo = [
   {
     icon: Mail,
@@ -93,7 +101,7 @@ const socialLinks = [
 </script>
 
 <template>
-  <section id="contact" ref="sectionRef" class="py-20 bg-white">
+  <section id="contact" ref="sectionRef" class="py-20 bg-white relative">
     <div class="container-max section-padding">
       <div class="text-center mb-16">
         <h2 
@@ -115,7 +123,6 @@ const socialLinks = [
       </div>
 
       <div class="grid lg:grid-cols-2 gap-12">
-        <!-- Contact Information -->
         <div 
           class="transition-all duration-1000 delay-400 transform"
           :class="isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'"
@@ -123,27 +130,19 @@ const socialLinks = [
           <h3 class="text-2xl font-bold mb-8 text-secondary-900">Let's Connect</h3>
           
           <div class="space-y-6 mb-8">
-            <div 
-              v-for="info in contactInfo" 
-              :key="info.title"
-              class="flex items-center group"
-            >
+            <div v-for="info in contactInfo" :key="info.title" class="flex items-center group">
               <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4 group-hover:bg-primary-200 transition-colors duration-200">
                 <component :is="info.icon" class="w-6 h-6 text-primary-600" />
               </div>
               <div>
                 <h4 class="font-semibold text-secondary-900">{{ info.title }}</h4>
-                <a 
-                  :href="info.link" 
-                  class="text-secondary-600 hover:text-primary-600 transition-colors duration-200"
-                >
+                <a :href="info.link" class="text-secondary-600 hover:text-primary-600 transition-colors duration-200">
                   {{ info.value }}
                 </a>
               </div>
             </div>
           </div>
 
-          <!-- Social Links -->
           <div class="mb-8">
             <h4 class="font-semibold text-secondary-900 mb-4">Follow Me</h4>
             <div class="flex space-x-4">
@@ -151,17 +150,15 @@ const socialLinks = [
                 v-for="social in socialLinks" 
                 :key="social.name"
                 :href="social.url"
-                :target="social.url.startsWith('http') ? '_blank' : undefined"
-                :rel="social.url.startsWith('http') ? 'noopener noreferrer' : undefined"
-                :class="['text-secondary-600 transition-all duration-200 transform hover:scale-110', social.color]"
-                :aria-label="social.name"
+                target="_blank"
+                class="transition-all duration-200 transform hover:scale-110"
+                :class="['text-secondary-600', social.color]"
               >
                 <component :is="social.icon" class="w-6 h-6" />
               </a>
             </div>
           </div>
 
-          <!-- Call to Action -->
           <div class="card p-6 bg-gradient-to-r from-primary-50 to-primary-100">
             <div class="flex items-center mb-4">
               <MessageCircle class="w-6 h-6 text-primary-600 mr-3" />
@@ -170,13 +167,9 @@ const socialLinks = [
             <p class="text-secondary-700 mb-4">
               I'm actively seeking internship and full-time opportunities. Let's discuss how I can contribute to your team!
             </p>
-            <a href="mailto:joeseno040@gmail.com" class="btn-primary text-sm">
-              Send Email
-            </a>
           </div>
         </div>
 
-        <!-- Contact Form -->
         <div 
           class="transition-all duration-1000 delay-600 transform"
           :class="isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'"
@@ -184,14 +177,13 @@ const socialLinks = [
           <div class="card p-8">
             <h3 class="text-2xl font-bold mb-6 text-secondary-900">Send a Message</h3>
             
-            <form @submit.prevent="handleSubmit" class="space-y-6">
+            <form ref="formRef" @submit.prevent="handleSubmit" class="space-y-6">
               <div class="grid sm:grid-cols-2 gap-6">
                 <div>
-                  <label for="name" class="block text-sm font-medium text-secondary-700 mb-2">
-                    Your Name
-                  </label>
+                  <label for="name" class="block text-sm font-medium text-secondary-700 mb-2">Your Name</label>
                   <input
                     id="name"
+                    name="name"
                     v-model="form.name"
                     type="text"
                     required
@@ -201,11 +193,10 @@ const socialLinks = [
                 </div>
                 
                 <div>
-                  <label for="email" class="block text-sm font-medium text-secondary-700 mb-2">
-                    Email Address
-                  </label>
+                  <label for="email" class="block text-sm font-medium text-secondary-700 mb-2">Email Address</label>
                   <input
                     id="email"
+                    name="email"
                     v-model="form.email"
                     type="email"
                     required
@@ -216,11 +207,10 @@ const socialLinks = [
               </div>
 
               <div>
-                <label for="subject" class="block text-sm font-medium text-secondary-700 mb-2">
-                  Subject
-                </label>
+                <label for="subject" class="block text-sm font-medium text-secondary-700 mb-2">Subject</label>
                 <input
                   id="subject"
+                  name="subject"
                   v-model="form.subject"
                   type="text"
                   required
@@ -230,11 +220,10 @@ const socialLinks = [
               </div>
 
               <div>
-                <label for="message" class="block text-sm font-medium text-secondary-700 mb-2">
-                  Message
-                </label>
+                <label for="message" class="block text-sm font-medium text-secondary-700 mb-2">Message</label>
                 <textarea
                   id="message"
+                  name="message"
                   v-model="form.message"
                   rows="5"
                   required
@@ -249,7 +238,8 @@ const socialLinks = [
                 class="w-full btn-primary inline-flex items-center justify-center gap-2"
                 :class="{ 'opacity-75 cursor-not-allowed': isSubmitting }"
               >
-                <Send class="w-5 h-5" />
+                <Send v-if="!isSubmitting" class="w-5 h-5" />
+                <span v-else class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                 {{ isSubmitting ? 'Sending...' : 'Send Message' }}
               </button>
             </form>
@@ -257,5 +247,54 @@ const socialLinks = [
         </div>
       </div>
     </div>
+
+    <Transition name="fade">
+      <div v-if="showSuccess" class="fixed inset-0 z-50 flex items-center justify-center px-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="showSuccess = false"></div>
+        
+        <div class="bg-white rounded-2xl p-8 shadow-2xl relative z-10 max-w-md w-full text-center transform transition-all animate-bounce-in">
+          <button @click="showSuccess = false" class="absolute top-4 right-4 text-secondary-400 hover:text-secondary-600 transition-colors">
+            <X class="w-6 h-6" />
+          </button>
+          
+          <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle class="w-10 h-10 text-green-600" />
+          </div>
+          
+          <h3 class="text-2xl font-bold text-secondary-900 mb-2">Message Sent!</h3>
+          <p class="text-secondary-600 mb-8 leading-relaxed">
+            Thanks for reaching out! I've received your message and will get back to you shortly.
+          </p>
+          
+          <button @click="showSuccess = false" class="btn-primary w-full py-3 text-lg">
+            Awesome!
+          </button>
+        </div>
+      </div>
+    </Transition>
   </section>
 </template>
+
+<style scoped>
+/* Fade Transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Custom Bounce Animation for Modal */
+@keyframes bounce-in {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+</style>
