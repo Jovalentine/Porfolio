@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
-import { ExternalLink, Github, Globe, FileText, ShoppingCart, Brain, Database, GraduationCap } from 'lucide-vue-next'
+import { Github, Globe, ShoppingCart, Brain, Database, GraduationCap } from 'lucide-vue-next'
 
 const sectionRef = ref<HTMLElement>()
 const isVisible = ref(false)

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
-import { Code, Database, Globe, Cloud, Server, Wrench } from 'lucide-vue-next'
+import { Code, Database, Globe, Cloud } from 'lucide-vue-next'
 
 const sectionRef = ref<HTMLElement>()
 const isVisible = ref(false)
