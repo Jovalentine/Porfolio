@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { ChevronDown, Download, Mail, Github, Linkedin } from 'lucide-vue-next'
+import { ChevronDown, Download, Github, Linkedin, Mail } from 'lucide-vue-next'
+import { onMounted, ref } from 'vue'
 
 const isVisible = ref(false)
 
@@ -76,7 +76,7 @@ const scrollToAbout = () => {
           <!-- CTA Buttons -->
           <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <a 
-              href="./Resume (2).pdf" 
+              href="./Resume.pdf" 
               download="Francis_Johan_M_Resume.pdf"
               class="btn-primary inline-flex items-center gap-2"
             >
