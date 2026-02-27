@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
-import { Github, Globe, ShoppingCart, Brain, Database, GraduationCap } from 'lucide-vue-next'
+import { Brain, Database, Github, Globe, GraduationCap, ShoppingCart } from 'lucide-vue-next'
+import { ref } from 'vue'
 
 const sectionRef = ref<HTMLElement>()
 const isVisible = ref(false)
@@ -45,6 +45,24 @@ const projects = [
     ],
     liveDemo: 'https://smartdoc-huunddjtfi2vkmt28eoc7e.streamlit.app/',
     sourceCode: 'https://github.com/Jovalentine/SmartDoc',
+    category: 'AI/ML'
+  },
+  {
+    title: 'Oracle Forensic System v2.0',
+    description: 'Advanced AI-powered digital forensic investigation portal for traffic accident analysis using dashcam/CCTV footage and static images. Features multimodal evidence processing with Google\'s Gemini 2.5 Flash AI for scene reconstruction and fault allocation.',
+    icon: Brain,
+    image: 'https://images.pexels.com/photos/8728382/pexels-photo-8728382.jpeg?auto=compress&cs=tinysrgb&w=800',
+    technologies: [
+      'Python',
+      'Flask',
+      'Google Gemini 2.5 Flash',
+      'MongoDB',
+      'OpenCV',
+      'ReportLab',
+      'Multimodal AI'
+    ],
+    liveDemo: 'https://oracle-v2.vercel.app/',
+    sourceCode: 'https://github.com/Jovalentine/oracle-v2',
     category: 'AI/ML'
   },
   {
