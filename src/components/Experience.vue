@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
-import { GraduationCap, Award, BookOpen, FileText, Briefcase, Lightbulb } from 'lucide-vue-next'
+import { Award, BookOpen, Briefcase, FileText, GraduationCap, Lightbulb } from 'lucide-vue-next'
+import { ref } from 'vue'
 
 const sectionRef = ref<HTMLElement>()
 const isVisible = ref(false)
@@ -45,6 +45,23 @@ const experiences = [
   },
   {
     title: 'Published Researcher',
+    organization: 'International Journal for Research in Applied Science and Engineering Technology (IJRASET)',
+    period: 'Mar 16, 2026',
+    type: 'Publication',
+    icon: FileText,
+    description: 'Published research paper on a machine learning-based forensic system for road accident detection and reporting.',
+    achievements: [
+      'Paper: "A Machine Learning Based Forensic System for Road Accident Detection and Reporting"',
+      'Presented a multimodal implementation using Gemini 2.5 Flash with adaptive model failover for collision analysis.',
+      'Covered dashcam/CCTV video temporal keyframing and static crash image processing capabilities.',
+      'Demonstrated practical AI application in real-time intersection surveillance, fault allocation, and automated forensic dossier generation.',
+      'Paper ID: IJRASET78258'
+    ],
+    link: 'https://www.ijraset.com/best-journal/a-machine-learning-based-forensic-system-for-road-accident-scene-detection-and-reporting',
+    paperId: 'IJRASET78258'
+  },
+  {
+    title: 'Published Researcher',
     organization: 'International Journal of Scientific Research and Engineering Development',
     period: 'May 2, 2025',
     type: 'Publication',
@@ -56,7 +73,10 @@ const experiences = [
       'Covered PDF, DOCX, and TXT file processing capabilities',
       'Demonstrated practical AI application in document management',
       'Contributed to academic research in NLP field'
-    ]
+    ],
+    link: 'https://www.ijsred.com/volume8/issue2/IJSRED-V8I2P436.pdf',
+    paperId: 'IJSRED-V8I2P436',
+    pages: '3008-3015'
   },
   {
     title: 'Final Year Engineering Student',
@@ -149,21 +169,18 @@ const getBgColor = (type: string) => {
       </div>
 
       <div class="relative">
-        <!-- Timeline Line -->
         <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary-500 to-primary-700 hidden md:block"></div>
 
         <div class="space-y-12">
           <div 
             v-for="(experience, index) in experiences" 
-            :key="experience.title"
+            :key="experience.title + index"
             class="relative transition-all duration-1000 transform"
             :class="isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'"
             :style="{ transitionDelay: `${400 + index * 200}ms` }"
           >
-            <!-- Timeline Dot -->
             <div class="absolute left-6 w-4 h-4 bg-primary-600 rounded-full border-4 border-white shadow-lg hidden md:block"></div>
 
-            <!-- Content Card -->
             <div class="md:ml-20">
               <div class="card p-8">
                 <div class="flex items-start justify-between mb-6">
@@ -176,7 +193,7 @@ const getBgColor = (type: string) => {
                       <p class="text-primary-600 font-medium">{{ experience.organization }}</p>
                     </div>
                   </div>
-                  <span class="text-sm text-secondary-500 bg-secondary-100 px-3 py-1 rounded-full">
+                  <span class="text-sm text-secondary-500 bg-secondary-100 px-3 py-1 rounded-full text-center min-w-[120px]">
                     {{ experience.period }}
                   </span>
                 </div>
@@ -199,11 +216,10 @@ const getBgColor = (type: string) => {
                   </ul>
                 </div>
 
-                <!-- Special action for Published Researcher -->
-                <div v-if="experience.type === 'Publication'" class="mt-6 pt-6 border-t border-secondary-200">
+                <div v-if="experience.link" class="mt-6 pt-6 border-t border-secondary-200">
                   <div class="flex flex-col sm:flex-row gap-4">
                     <a 
-                      href="https://www.ijsred.com/volume8/issue2/IJSRED-V8I2P436.pdf"
+                      :href="experience.link"
                       target="_blank"
                       rel="noopener noreferrer"
                       class="btn-primary inline-flex items-center justify-center gap-2 text-sm"
@@ -211,9 +227,9 @@ const getBgColor = (type: string) => {
                       <FileText class="w-4 h-4" />
                       View Article
                     </a>
-                    <div class="flex flex-col text-sm text-secondary-600">
-                      <span><strong>Paper ID:</strong> IJSRED-V8I2P436</span>
-                      <span><strong>Pages:</strong> 3008-3015</span>
+                    <div v-if="experience.paperId" class="flex flex-col text-sm text-secondary-600">
+                      <span><strong>Paper ID:</strong> {{ experience.paperId }}</span>
+                      <span v-if="experience.pages"><strong>Pages:</strong> {{ experience.pages }}</span>
                     </div>
                   </div>
                 </div>
@@ -223,7 +239,6 @@ const getBgColor = (type: string) => {
         </div>
       </div>
 
-      <!-- Future Goals -->
       <div 
         class="mt-16 text-center transition-all duration-1000 delay-1000 transform"
         :class="isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'"
