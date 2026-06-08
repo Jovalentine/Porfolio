@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
-import { GraduationCap, MapPin, Calendar, Target } from 'lucide-vue-next'
+import { Briefcase, GraduationCap, Lightbulb, MapPin, Target } from 'lucide-vue-next'
+import { ref } from 'vue'
 
 const sectionRef = ref<HTMLElement>()
 const isVisible = ref(false)
@@ -14,7 +14,7 @@ useIntersectionObserver(sectionRef, ([{ isIntersecting }]) => {
 </script>
 
 <template>
-  <section id="about" ref="sectionRef" class="py-20 bg-white">
+  <section id="about" ref="sectionRef" class="py-20 bg-white select-none">
     <div class="container-max section-padding">
       <div class="text-center mb-16">
         <h2 
@@ -36,19 +36,15 @@ useIntersectionObserver(sectionRef, ([{ isIntersecting }]) => {
           :class="isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'"
         >
           <h3 class="text-2xl md:text-3xl font-bold mb-6 text-secondary-900">
-            Passionate Engineering Student Ready to Make an Impact
+            Software & AI Engineering Solutions
           </h3>
           
           <p class="text-lg text-secondary-700 mb-6 leading-relaxed">
-            As a final year engineering student at Francis Xavier Engineering College, I'm passionate about 
-            leveraging technology to solve real-world problems. My academic journey has equipped me with 
-            strong analytical skills and a deep understanding of engineering principles.
+            Computer Science Engineering graduate specializing in Python, Full-Stack Development, and AI/ML. Experienced in engineering intelligent automation, building cloud-deployed NLP solutions, and applying computer vision architectures.
           </p>
           
           <p class="text-lg text-secondary-700 mb-8 leading-relaxed">
-            I'm actively seeking opportunities to apply my knowledge in a professional environment, 
-            contribute to innovative projects, and continue learning from industry experts. My goal is 
-            to become a valuable team member who can drive technological advancement and create meaningful solutions.
+            Focused on applying algorithmic knowledge within production environments, collaborating on high-velocity innovative projects, and expanding backend capabilities. Driven to engineer highly scalable, optimized systems that deliver meaningful real-world software solutions.
           </p>
 
           <!-- Info Cards -->
@@ -58,7 +54,7 @@ useIntersectionObserver(sectionRef, ([{ isIntersecting }]) => {
                 <GraduationCap class="w-6 h-6 text-primary-600 mr-3" />
                 <h4 class="font-semibold text-secondary-900">Education</h4>
               </div>
-              <p class="text-secondary-700">Final Year Engineering</p>
+              <p class="text-secondary-700">B.E. Computer Science Engineering</p>
               <p class="text-sm text-secondary-500">Francis Xavier Engineering College</p>
             </div>
 
@@ -73,11 +69,11 @@ useIntersectionObserver(sectionRef, ([{ isIntersecting }]) => {
 
             <div class="card p-6">
               <div class="flex items-center mb-3">
-                <Calendar class="w-6 h-6 text-primary-600 mr-3" />
+                <Briefcase class="w-6 h-6 text-primary-600 mr-3" />
                 <h4 class="font-semibold text-secondary-900">Status</h4>
               </div>
-              <p class="text-secondary-700">Final Year Student</p>
-              <p class="text-sm text-secondary-500">Graduating Soon</p>
+              <p class="text-secondary-700">Available</p>
+              <p class="text-sm text-secondary-500">For Full-Time Remote Roles</p>
             </div>
 
             <div class="card p-6">
@@ -85,8 +81,8 @@ useIntersectionObserver(sectionRef, ([{ isIntersecting }]) => {
                 <Target class="w-6 h-6 text-primary-600 mr-3" />
                 <h4 class="font-semibold text-secondary-900">Goal</h4>
               </div>
-              <p class="text-secondary-700">Career Opportunities</p>
-              <p class="text-sm text-secondary-500">Ready to Contribute</p>
+              <p class="text-secondary-700">Software & AI Engineer</p>
+              <p class="text-sm text-secondary-500">Build Intelligent Automation</p>
             </div>
           </div>
         </div>
@@ -100,9 +96,9 @@ useIntersectionObserver(sectionRef, ([{ isIntersecting }]) => {
             <div class="aspect-square rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 p-8 shadow-2xl">
               <div class="w-full h-full rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center">
                 <div class="text-center text-white">
-                  <GraduationCap class="w-24 h-24 mx-auto mb-4 opacity-80" />
-                  <h4 class="text-2xl font-bold mb-2">Engineering Excellence</h4>
-                  <p class="text-lg opacity-90">Building Tomorrow's Solutions</p>
+                  <Lightbulb class="w-24 h-24 mx-auto mb-4 opacity-80" />
+                  <h4 class="text-2xl font-bold mb-2">Engineering Solutions</h4>
+                  <p class="text-lg opacity-90">Building Robust Architectures and High-Performance Software Operations</p>
                 </div>
               </div>
             </div>

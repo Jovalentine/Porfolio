@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
-import { Code, Database, Globe, Cloud } from 'lucide-vue-next'
+import { Cloud, Code, Database, Globe } from 'lucide-vue-next'
+import { ref } from 'vue'
 
 const sectionRef = ref<HTMLElement>()
 const isVisible = ref(false)
@@ -37,7 +37,7 @@ const skillCategories = [
       { name: 'Firebase', level: 90 },
       { name: 'MySQL', level: 80 },
       { name: 'MongoDB', level: 70 },
-      { name: 'REST APIs', level: 75 }
+      { name: 'Fast APIs', level: 75 }
     ]
   },
   {

@@ -20,7 +20,6 @@ const scrollToAbout = () => {
 
 <template>
   <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
-    <!-- Background Pattern -->
     <div class="absolute inset-0 opacity-5">
       <div class="absolute inset-0 bg-gradient-to-r from-primary-600 to-primary-800"></div>
       <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +34,6 @@ const scrollToAbout = () => {
 
     <div class="container-max section-padding relative z-10">
       <div class="text-center">
-        <!-- Profile Image -->
         <div 
           class="mb-8 transition-all duration-1000 transform"
           :class="isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'"
@@ -47,7 +45,6 @@ const scrollToAbout = () => {
           </div>
         </div>
 
-        <!-- Main Content -->
         <div 
           class="transition-all duration-1000 delay-300 transform"
           :class="isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'"
@@ -56,24 +53,10 @@ const scrollToAbout = () => {
             <span class="gradient-text">Francis Johan M</span>
           </h1>
           
-          <p class="text-xl md:text-2xl text-secondary-600 mb-4 font-medium">
-            Final Year Engineering Student
-          </p>
-          
-          <p class="text-lg text-secondary-500 mb-2">
-            Francis Xavier Engineering College
-          </p>
-          
-          <p class="text-base text-secondary-500 mb-8">
-            📍 Tirunelveli, Tamil Nadu, India
+          <p class="text-lg md:text-xl text-secondary-700 font-medium max-w-3xl mx-auto leading-relaxed mb-12">
+            Software & AI Engineer passionate about leveraging machine learning and full-stack development to solve complex, real-world problems.
           </p>
 
-          <p class="text-lg md:text-xl text-secondary-700 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Passionate about technology and innovation, building solutions that make a difference. 
-            Ready to contribute to cutting-edge projects and grow in the tech industry.
-          </p>
-
-          <!-- CTA Buttons -->
           <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <a 
               href="./Resume.pdf" 
@@ -92,7 +75,6 @@ const scrollToAbout = () => {
             </a>
           </div>
 
-          <!-- Social Links -->
           <div class="flex justify-center space-x-6 mb-16">
             <a 
               href="https://github.com/Jovalentine" 
@@ -122,7 +104,6 @@ const scrollToAbout = () => {
           </div>
         </div>
 
-        <!-- Scroll Indicator -->
         <div 
           class="absolute bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 delay-700"
           :class="isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'"
